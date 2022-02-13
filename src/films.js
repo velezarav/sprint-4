@@ -42,35 +42,32 @@ function moviesAverageByCategory(array, genre) {
 
 // Exercise 7: Modify the duration of movies to minutes
 function hoursToMinutes(array) {
-  const newArray = array.map(film => film);
+  // const newArray = array.map(film => film);
+  const newArray = Object.assign([], array);
   for (let movie of newArray){
-    if (movie.duration.length > 3) {
+    if (movie.duration.includes('h') && movie.duration.includes('min')) {
       let time = movie.duration.split(' ');
       let hours = time[0].slice(0, -1);
       let minutes = time[1].slice(0, -3);
       movie.duration = (parseInt(hours) * 60) + parseInt(minutes);
+    } else if (movie.duration.includes('h')) {
+      let minutes = movie.duration.slice(0, -1) * 60;
+      movie.duration = minutes;
     } else {
       let minutes = movie.duration.slice(0, -3);
       movie.duration = minutes;
     }
   }
-  // console.log(newArray)
+  console.log(newArray)
+  console.log('ESTEES',array)
   return newArray;
 }
 
 // Exercise 8: Get the best film of a year
 function bestFilmOfYear(array, year) {
   const moviesOfYear = array.filter(film => film.year === year);
-  // USANDO REDUCE
-  // const bestFilmOfYear = moviesOfYear.reduce((a, b) => a = a.score > b.score ? a : b);
-
-  // USANDO SORT
   const filmsOrdered = moviesOfYear.sort((a, b) => (a.score > b.score) ? 1 : -1);
-  const bestFilmOfYear = filmsOrdered[-1];
-  console.log(filmsOrdered)
-
-  // console.log('array de movies ', moviesOfYear)
-  // console.log('mejor movie', bestFilmOfYear)
+  const bestFilmOfYear = [filmsOrdered[filmsOrdered.length -1]];
   return bestFilmOfYear;
 }
 
